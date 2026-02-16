@@ -1119,6 +1119,109 @@
             }
         }
     </script>
+    <script>
+        (function () {
+      const API_BASE = "https://soporte.willytirado.top/widget";
+      const WIDGET_TOKEN = "8380ae298515566aea90122e6baa4eb8";
+    
+      const css = `
+      #aiw-bubble{position:fixed;right:18px;bottom:18px;width:56px;height:56px;border-radius:50%;background:#111;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:99999;font-family:system-ui}
+      #aiw-panel{position:fixed;right:18px;bottom:84px;width:360px;max-width:92vw;height:520px;max-height:75vh;background:#fff;border:1px solid #e5e5e5;border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.18);display:none;flex-direction:column;overflow:hidden;z-index:99999;font-family:system-ui}
+      #aiw-head{padding:10px 12px;background:#111;color:#fff;font-weight:600}
+      #aiw-msgs{flex:1;padding:10px;overflow:auto;background:#fafafa}
+      .aiw-m{margin:8px 0;display:flex}
+      .aiw-u{justify-content:flex-end}
+      .aiw-b{max-width:85%;padding:10px 12px;border-radius:12px;white-space:pre-wrap;line-height:1.25;font-size:14px}
+      .aiw-u .aiw-b{background:#111;color:#fff}
+      .aiw-a .aiw-b{background:#fff;border:1px solid #e6e6e6;color:#111}
+      #aiw-foot{display:flex;gap:8px;padding:10px;border-top:1px solid #eee;background:#fff}
+      #aiw-in{flex:1;padding:10px;border:1px solid #ddd;border-radius:10px;font-size:14px}
+      #aiw-send{padding:10px 12px;border:0;border-radius:10px;background:#111;color:#fff;cursor:pointer}
+      `;
+    
+      const style = document.createElement("style");
+      style.textContent = css;
+      document.head.appendChild(style);
+    
+      const bubble = document.createElement("div");
+      bubble.id = "aiw-bubble";
+      bubble.textContent = "AI";
+    
+      const panel = document.createElement("div");
+      panel.id = "aiw-panel";
+      panel.innerHTML = `
+        <div id="aiw-head">Asistente de Soporte</div>
+        <div id="aiw-msgs"></div>
+        <div id="aiw-foot">
+          <input id="aiw-in" placeholder="Escribe tu pregunta..." />
+          <button id="aiw-send">Enviar</button>
+        </div>
+      `;
+    
+      document.body.appendChild(bubble);
+      document.body.appendChild(panel);
+    
+      const msgs = panel.querySelector("#aiw-msgs");
+      const input = panel.querySelector("#aiw-in");
+      const sendBtn = panel.querySelector("#aiw-send");
+    
+      const sidKey = "aiw_session_id";
+      let sessionId = localStorage.getItem(sidKey);
+      if (!sessionId) {
+        sessionId = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
+        localStorage.setItem(sidKey, sessionId);
+      }
+    
+      function addMsg(role, text) {
+        const row = document.createElement("div");
+        row.className = "aiw-m " + (role === "user" ? "aiw-u" : "aiw-a");
+        const b = document.createElement("div");
+        b.className = "aiw-b";
+        b.textContent = text;
+        row.appendChild(b);
+        msgs.appendChild(row);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+    
+      async function postJSON(path, body) {
+        const res = await fetch(API_BASE + path, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Widget-Token": WIDGET_TOKEN
+          },
+          body: JSON.stringify(body)
+        });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      }
+    
+      async function sendText() {
+        const text = input.value.trim();
+        if (!text) return;
+        input.value = "";
+        addMsg("user", text);
+    
+        try {
+          const data = await postJSON("/chat", { session_id: sessionId, message: text });
+          addMsg("assistant", data.reply || "OK");
+        } catch (e) {
+          addMsg("assistant", "Error enviando mensaje. Intenta de nuevo.");
+        }
+      }
+    
+      sendBtn.addEventListener("click", sendText);
+      input.addEventListener("keydown", (e) => { if (e.key === "Enter") sendText(); });
+    
+      bubble.addEventListener("click", () => {
+        const shown = panel.style.display === "flex";
+        panel.style.display = shown ? "none" : "flex";
+        if (!shown && msgs.childNodes.length === 0) {
+          addMsg("assistant", "Hola. Puedo ayudarte con registros, compras y administración. ¿Qué plataforma estás usando?");
+        }
+      });
+    })();
+    </script>
 </body>
 
 </html>
