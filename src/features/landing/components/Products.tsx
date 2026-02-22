@@ -8,29 +8,29 @@ const PRODUCTS = [
 
 export const Products = () => {
     return (
-        <section id="productos" className="py-24 bg-dark-card/20 relative overflow-hidden">
+        <section id="productos" className="py-24 bg-white relative overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16 space-y-4">
-                    <div className="inline-block px-4 py-1 rounded-full border border-gold/30 bg-gold/10 text-gold text-[0.6rem] font-black uppercase tracking-widest">
+                    <div className="inline-block px-4 py-1 rounded-full border border-gold/10 bg-gold/5 text-gold text-[0.6rem] font-black uppercase tracking-widest">
                         Tecnología & Salud
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-black">
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900">
                         Productos que <span className="text-gold">venden solos</span>
                     </h2>
-                    <p className="text-white/40 max-w-xl mx-auto">
+                    <p className="text-slate-400 max-w-xl mx-auto font-medium">
                         Alta rotación diaria. Consumo habitual. El producto trabaja para ti mientras el sistema construye tu equipo.
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
                     {PRODUCTS.map((prod, idx) => (
-                        <div key={idx} className="glass p-8 rounded-3xl text-center hover:border-gold/30 transition-all group">
-                            <div className="text-6xl mb-6 group-hover:scale-110 transition-transform">{prod.icon}</div>
-                            <div className="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-[0.6rem] font-bold uppercase tracking-widest mb-4">
+                        <div key={idx} className="bento-card p-8 rounded-3xl text-center hover:border-gold/30 transition-all group bg-white shadow-lg">
+                            <div className="text-6xl mb-6 group-hover:scale-110 transition-transform grayscale-[40%] group-hover:grayscale-0">{prod.icon}</div>
+                            <div className="inline-block px-3 py-1 rounded-full bg-slate-50 text-gold text-[0.6rem] font-bold uppercase tracking-widest mb-4 border border-slate-100">
                                 {prod.tag}
                             </div>
-                            <h3 className="text-xl font-black mb-3">{prod.title}</h3>
-                            <p className="text-sm text-white/50 leading-relaxed">{prod.desc}</p>
+                            <h3 className="text-xl font-black mb-3 text-slate-800">{prod.title}</h3>
+                            <p className="text-sm text-slate-500 font-medium leading-relaxed">{prod.desc}</p>
                         </div>
                     ))}
                 </div>
