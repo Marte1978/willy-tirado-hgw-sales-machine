@@ -3,29 +3,29 @@
 @theme inline {
   --color-gold: #C9A84C;
   --color-gold-light: #F0D080;
-  --color-gold-glow: rgba(201, 168, 76, 0.4);
+  --color-gold-glow: rgba(201, 168, 76, 0.1);
   --color-ai-cyan: #00F2FF;
-  --color-dark: #0A0A0F;
-  --color-dark-card: #0D0D14;
-  --color-dark-border: rgba(255, 255, 255, 0.08);
-  --color-success: #2ECC71;
+  --color-dark: #0F172A;
+  --color-dark-card: #F8FAFC;
+  --color-dark-border: rgba(0, 0, 0, 0.05);
+  --color-success: #10B981;
 
   --font-sans: "Inter", var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --shadow-premium: 0 40px 80px rgba(0, 0, 0, 0.8);
-  --shadow-gold: 0 8px 30px rgba(201, 168, 76, 0.35);
-  --shadow-glow: 0 0 40px rgba(201, 168, 76, 0.2);
+  --shadow-premium: 0 40px 80px rgba(0, 0, 0, 0.1);
+  --shadow-gold: 0 8px 30px rgba(201, 168, 76, 0.2);
+  --shadow-glow: 0 0 40px rgba(201, 168, 76, 0.08);
 }
 
 :root {
-  --background: #0A0A0F;
-  --foreground: #FFFFFF;
+  --background: #FFFFFF;
+  --foreground: #020617;
   --gold: #C9A84C;
-  --gold-glow: rgba(201, 168, 76, 0.15);
+  --gold-glow: rgba(201, 168, 76, 0.05);
   --ai-cyan: #00F2FF;
-  --dark-card: #0D0D14;
-  --dark-border: rgba(255, 255, 255, 0.08);
+  --dark-card: #F8FAFC;
+  --dark-border: rgba(0, 0, 0, 0.05);
 }
 
 @layer base {
@@ -34,10 +34,10 @@
   }
 
   body {
-    @apply bg-dark text-white font-sans antialiased selection:bg-gold selection:text-dark;
+    @apply bg-white text-slate-950 font-sans antialiased selection:bg-gold selection:text-white;
     background:
       radial-gradient(circle at 50% -20%, var(--gold-glow) 0%, transparent 70%),
-      linear-gradient(to bottom, #0A0A0F, #050508);
+      #FFFFFF;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -48,9 +48,9 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
+      linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 80px 80px;
     mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black, transparent);
     pointer-events: none;
     z-index: 0;
@@ -59,27 +59,27 @@
 
 @layer components {
   .glass {
-    background-color: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.05);
   }
 
   .glass-gold {
     background-color: rgba(201, 168, 76, 0.05);
-    backdrop-filter: blur(40px);
+    backdrop-filter: blur(20px);
     border: 1px solid rgba(201, 168, 76, 0.1);
-    box-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
+    box-shadow: 0 0 30px rgba(201, 168, 76, 0.1);
   }
 
   .btn-gold {
-    @apply relative overflow-hidden bg-gold text-dark font-black px-8 py-4 rounded-full transition-all duration-500 shadow-gold hover:scale-105 hover:shadow-gold/50 active:scale-95;
+    @apply relative overflow-hidden bg-gold text-white font-black px-8 py-4 rounded-full transition-all duration-500 shadow-gold hover:scale-105 hover:shadow-gold/40 active:scale-95;
     background: linear-gradient(135deg, var(--gold) 0%, #A87830 100%);
   }
 
   .btn-gold::after {
     content: "";
-    @apply absolute inset-0 bg-white/20 opacity-0 transition-opacity duration-300;
+    @apply absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300;
   }
 
   .btn-gold:hover::after {
@@ -87,15 +87,14 @@
   }
 
   .text-gradient {
-    @apply bg-linear-to-r from-gold via-gold-light to-gold bg-clip-text text-transparent;
+    @apply bg-linear-to-r from-gold via-slate-900 to-gold bg-clip-text text-transparent;
   }
 
   .bento-card {
-    background-color: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    @apply rounded-3xl p-8 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.15] hover:-translate-y-1;
+    background-color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.03);
+    @apply rounded-3xl p-8 transition-all duration-500 hover:shadow-xl hover:border-gold/20 hover:-translate-y-1;
   }
 }
 
