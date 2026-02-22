@@ -8,28 +8,28 @@ const REVIEWS = [
 
 export const Testimonials = () => {
     return (
-        <section className="py-24">
+        <section className="py-24 bg-white">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16 space-y-4">
-                    <div className="inline-block px-4 py-1 rounded-full border border-gold/30 bg-gold/10 text-gold text-[0.6rem] font-black uppercase tracking-widest">
+                    <div className="inline-block px-4 py-1 rounded-full border border-gold/10 bg-gold/5 text-gold text-[0.6rem] font-black uppercase tracking-widest">
                         El Equipo Habla
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-black">
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900">
                         Resultados <span className="text-gold">verificables</span>
                     </h2>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-8">
                     {REVIEWS.map((rev, idx) => (
-                        <div key={idx} className="glass p-8 rounded-3xl space-y-6 relative overflow-hidden">
+                        <div key={idx} className="bento-card p-8 rounded-3xl space-y-6 relative overflow-hidden bg-white shadow-xl border-slate-50">
                             <div className="text-gold text-2xl">★★★★★</div>
-                            <p className="text-white/70 italic leading-relaxed">"{rev.text}"</p>
+                            <p className="text-slate-600 italic leading-relaxed font-medium">"{rev.text}"</p>
                             <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-linear-to-br from-gold to-[#A87830] flex items-center justify-center font-black text-dark text-xs">
+                                <div className="w-10 h-10 rounded-full bg-linear-to-br from-gold to-[#A87830] flex items-center justify-center font-black text-white text-xs shadow-lg">
                                     {rev.avatar}
                                 </div>
                                 <div>
-                                    <div className="font-black text-sm">{rev.name}</div>
+                                    <div className="font-black text-sm text-slate-800">{rev.name}</div>
                                     <div className="text-[0.6rem] text-gold font-bold uppercase tracking-widest">{rev.rank}</div>
                                 </div>
                             </div>
