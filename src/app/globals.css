@@ -3,59 +3,105 @@
 @theme inline {
   --color-gold: #C9A84C;
   --color-gold-light: #F0D080;
+  --color-gold-glow: rgba(201, 168, 76, 0.4);
+  --color-ai-cyan: #00F2FF;
   --color-dark: #0A0A0F;
-  --color-dark-card: #12121A;
-  --color-dark-border: #1E1E2E;
+  --color-dark-card: #0D0D14;
+  --color-dark-border: rgba(255, 255, 255, 0.08);
   --color-success: #2ECC71;
-  
+
   --font-sans: "Inter", var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  
-  --shadow-premium: 0 40px 80px rgba(0, 0, 0, 0.6);
+
+  --shadow-premium: 0 40px 80px rgba(0, 0, 0, 0.8);
   --shadow-gold: 0 8px 30px rgba(201, 168, 76, 0.35);
+  --shadow-glow: 0 0 40px rgba(201, 168, 76, 0.2);
 }
 
 :root {
   --background: #0A0A0F;
   --foreground: #FFFFFF;
   --gold: #C9A84C;
-  --gold-light: #F0D080;
-  --dark-card: #12121A;
-  --dark-border: #1E1E2E;
-  --success: #2ECC71;
+  --gold-glow: rgba(201, 168, 76, 0.15);
+  --ai-cyan: #00F2FF;
+  --dark-card: #0D0D14;
+  --dark-border: rgba(255, 255, 255, 0.08);
 }
 
 @layer base {
   * {
     @apply border-[var(--dark-border)];
   }
+
   body {
     @apply bg-dark text-white font-sans antialiased selection:bg-gold selection:text-dark;
-    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201, 168, 76, 0.12) 0%, transparent 70%),
-                linear-gradient(180deg, #0A0A0F 0%, #0D0D18 100%);
+    background:
+      radial-gradient(circle at 50% -20%, var(--gold-glow) 0%, transparent 70%),
+      linear-gradient(to bottom, #0A0A0F, #050508);
     min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black, transparent);
+    pointer-events: none;
+    z-index: 0;
   }
 }
 
 @layer components {
   .glass {
-    @apply bg-dark-card/80 backdrop-blur-xl border border-dark-border;
+    @apply bg-white/[0.03] backdrop-blur-2xl border border-white/[0.08] shadow-2xl;
   }
-  
+
+  .glass-gold {
+    @apply bg-gold/5 backdrop-blur-2xl border border-gold/10 shadow-gold/20;
+  }
+
   .btn-gold {
-    @apply bg-linear-to-br from-gold to-[#A87830] text-dark font-black px-8 py-4 rounded-xl transition-all duration-300 shadow-gold hover:scale-105 hover:shadow-[0_12px_40px_rgba(201,168,76,0.5)];
+    @apply relative overflow-hidden bg-gold text-dark font-black px-8 py-4 rounded-full transition-all duration-500 shadow-gold hover:scale-105 hover:shadow-gold/50 active:scale-95;
+    background: linear-gradient(135deg, var(--gold) 0%, #A87830 100%);
+  }
+
+  .btn-gold::after {
+    content: "";
+    @apply absolute inset-0 bg-white/20 opacity-0 transition-opacity duration-300;
+  }
+
+  .btn-gold:hover::after {
+    @apply opacity-100;
   }
 
   .text-gradient {
-    @apply bg-linear-to-r from-gold to-gold-light bg-clip-text text-transparent;
+    @apply bg-linear-to-r from-gold via-gold-light to-gold bg-clip-text text-transparent;
+  }
+
+  .bento-card {
+    @apply glass rounded-3xl p-8 transition-all duration-500 hover:bg-white/[0.05] hover:border-white/[0.15] hover:-translate-y-1;
   }
 }
 
 /* Custom animations */
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .animate-float {
