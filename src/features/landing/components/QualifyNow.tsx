@@ -23,7 +23,7 @@ export const QualifyNow = () => {
                     </div>
 
                     <div className="bg-rose-50 border border-rose-100 p-4 rounded-xl text-rose-500 font-bold text-sm animate-pulse">
-                        ⚠️ Cupos disponibles: 3 de 5 · Mes de Febrero
+                        ⚠️ Cupos disponibles: 3 de 5 · Abril 2026
                     </div>
 
                     <div className="flex flex-col items-center gap-6">
